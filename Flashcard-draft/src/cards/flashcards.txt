@@ -1,0 +1,20 @@
+Algorithm|A step-by-step procedure to solve a problem.
+Variable|A storage location paired with a name that holds data.
+Class|A blueprint for creating objects in object-oriented programming.
+Inheritance|A mechanism where one class acquires properties of another.
+Encapsulation|The practice of keeping data and methods inside a single unit.
+Polymorphism|The ability of different classes to be treated as instances of the same class.
+Interface|A contract that defines methods a class must implement.
+Recursion|A function that calls itself to solve smaller instances of a problem.
+Array|A collection of elements identified by index or key.
+Stack|A data structure that follows Last In First Out (LIFO) principle.
+Queue|A data structure that follows First In First Out (FIFO) principle.
+HashMap|A collection that stores key-value pairs for fast lookup.
+Constructor|A special method to initialize new objects.
+Exception|An event that disrupts the normal flow of a program.
+Thread|A path of execution within a program.
+Polymorphic Method|A method that behaves differently based on the object that calls it.
+Abstraction|Hiding complex implementation details while showing the necessary features.
+Loop|A programming construct that repeats a block of code.
+Boolean|A data type with only two possible values: true or false.
+Syntax|The set of rules that defines the structure of code in a programming language.
