@@ -50,13 +50,6 @@ public class FlashcardUI {
 
         loadFlashcardsFromFile("src/cards/flashcards.txt");
 
-        // Sample flashcards
-        flashcardList.add(new Flashcard("Java", "A high-level programming language."));
-        flashcardList.add(new Flashcard("Swing", "Java GUI toolkit."));
-        flashcardList.add(new Flashcard("Polymorphism", "Ability to take many forms."));
-        trie.insert("Java", "A high-level programming language.");
-        trie.insert("Swing", "Java GUI toolkit.");
-        trie.insert("Polymorphism", "Ability to take many forms.");
         currentNode = flashcardList.getHead();
         updateCardDisplay();
 
@@ -108,15 +101,39 @@ public class FlashcardUI {
             List<String> suggestions = trie.suggest(prefix);
             if (suggestions.isEmpty()) {
                 JOptionPane.showMessageDialog(frame, "No matching flashcards found.");
-            } else {
-                StringBuilder sb = new StringBuilder("Suggestions:\n");
-                for (String s : suggestions) sb.append("- ").append(s).append("\n");
-                JOptionPane.showMessageDialog(frame, sb.toString());
-
-                FlashcardNode node = flashcardList.findByKey(suggestions.get(0));
+            }
+            else if (suggestions.size() == 1) {
+                String firstResult = suggestions.get(0);
+                String key = firstResult.split(":", 2)[0].trim();
+                FlashcardNode node = flashcardList.findByKey(key);
                 if (node != null) {
                     setCurrentNode(node);
                     updateCardDisplay();
+                }
+            } else {
+                JList<String> list = new JList<>(suggestions.stream().map(s -> s.split(":", 2)[0].trim()).toArray(String[]::new));
+                list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                list.setVisibleRowCount(Math.min(100, suggestions.size())); // Tối đa 8 hàng hiển thị
+
+                JScrollPane scrollPane = new JScrollPane(list);
+                scrollPane.setPreferredSize(new Dimension(350, 150));
+
+                int result = JOptionPane.showConfirmDialog(
+                        frame,
+                        scrollPane,
+                        "Select a flashcard to view",
+                        JOptionPane.OK_CANCEL_OPTION,
+                        JOptionPane.PLAIN_MESSAGE
+                );
+
+                if (result == JOptionPane.OK_OPTION && list.getSelectedValue() != null) {
+                    String selected = list.getSelectedValue();
+                    String key = selected.split(":", 2)[0].trim();
+                    FlashcardNode node = flashcardList.findByKey(key);
+                    if (node != null) {
+                        setCurrentNode(node);
+                        updateCardDisplay();
+                    }
                 }
             }
         });
